@@ -58,7 +58,7 @@ console.log('recursion', resultRecursionDepth)
 
 
 // =======================WITH DEPTH ITERATIVE =============================
-const flattenIterative = (arr, depth ) =>{
+const flattenIterativeDepth = (arr, depth ) =>{
 
     const stack = arr.map((ele) => ({arr: ele, value : depth}));
     let result = [];
@@ -74,7 +74,7 @@ const flattenIterative = (arr, depth ) =>{
     }
     return result.reverse();
 }
-const resultIterativeDepth= flattenIterative([[[[0]], [1]], [[[2], [3]]], [[4],
+const resultIterativeDepth= flattenIterativeDepth([[[[0]], [1]], [[[2], [3]]], [[4],
     [5]]], 2);
 
 
