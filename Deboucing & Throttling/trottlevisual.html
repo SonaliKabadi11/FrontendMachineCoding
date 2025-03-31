@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Throttle visualization</title>
+    <style>
+        .container{
+           margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h6>Throttle visualizatio</h6>
+        <input type="text" id="search" placeholder="start typing..." />
+        <p id="value"></p>
+    </div>
+</body>
+<script>
+    let searchele = document.getElementById('search');
+    let valueele = document.getElementById('value');
+
+    const trottle = (fn, delay)=>{
+        let lastexecution = 0;
+        return function(...args){
+            let now = Date.now();
+            if(now - lastexecution >= delay){
+                fn(...args);
+                lastexecution = now;
+            }
+        }
+    }
+
+    const fn = ((event) =>{
+        valueele.innerHTML = event.target.value;
+    })
+
+    searchele.addEventListener('input', trottle(fn, 2000));
+
+</script>
+</html>
