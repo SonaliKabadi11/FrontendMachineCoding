@@ -6,9 +6,8 @@ Debouncing is the techinque to limit the execution of the function that gets tri
 - Window resize event: Prevent multiple execute while resizing.
 - Button clicks: Prevent accidental multiple clicks.
 
-- Throttling is a technique that limits the number of times a function can execute within a specific time interval.
-
-- Even if an event is triggered multiple times, the function will only execute at fixed intervals instead of executing every time.
+Throttling is a technique that limits the number of times a function can execute within a specific time interval.
+Even if an event is triggered multiple times, the function will only execute at fixed intervals instead of executing every time.
 
 ## Example
 

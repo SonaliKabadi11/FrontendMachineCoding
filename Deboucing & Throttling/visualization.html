@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debouncing example</title>
+</head>
+<body>
+    <input type="text" placeholder="Type..." id="search"/>
+    <p id="value"></p>
+</body>
+<script>
+
+
+
+
+
+let searchele = document.getElementById('search');
+let valueele = document.getElementById('value');
+
+const func = ((event) =>{
+    console.log(event.target.value)
+    valueele.innerText = event.target.value
+});
+
+const debounce = (fn, delay)=> {
+    let timer;
+    return function(...args){
+        clearTimeout(timer);
+        timer = setTimeout(()=>{
+            fn.apply(this, args)
+        }, delay)
+    }
+}
+
+searchele.addEventListener('input', debounce(func, 500));
+
+
+</script>
+</html>
