@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventEmitter Demo</title>
+</head>
+<body>
+    <h2>EventEmitter Demo</h2>
+    <button onclick="subscribeEvent('modify')">Subscribe to 'modify' Event</button>
+    <button onclick="emitEvent('modify')">Emit 'modify' Event</button>
+    <button onclick="unsubscribeEvent('modify')">Unsubscribe 'modify'</button>
+    <br><br>
+    <button onclick="subscribeEvent('update')">Subscribe to 'update' Event</button>
+    <button onclick="emitEvent('update')">Emit 'update' Event</button>
+    <button onclick="unsubscribeEvent('update')">Unsubscribe 'update'</button>
+    <p id="output"></p>
+
+    <script>
+        class EventEmitter {
+            constructor() {
+                this.events = {};
+            }
+
+            subscribe(eventName, callback) {
+                if (!this.events[eventName]) {
+                    this.events[eventName] = [];
+                }
+                const listener = { callback };
+                this.events[eventName].push(listener);
+                return {
+                    remove: () => {
+                        this.events[eventName] = this.events[eventName].filter(l => l !== listener);
+                    }
+                };
+            }
+
+            emit(eventName, ...args) {
+                if (this.events[eventName]) {
+                    this.events[eventName].forEach(listener => listener.callback(...args));
+                } else {
+                    document.getElementById("output").innerText = `No event found for: ${eventName}`;
+                }
+            }
+        }
+
+        const emitter = new EventEmitter();
+        let subscriptions = {};
+
+        function subscribeEvent(eventName) {
+            subscriptions[eventName] = emitter.subscribe(eventName, (msg) => {
+                document.getElementById("output").innerText = `${eventName.toUpperCase()}: ${msg}`;
+            });
+            document.getElementById("output").innerText = `Subscribed to '${eventName}' event.`;
+        }
+
+        function emitEvent(eventName) {
+            emitter.emit(eventName, `${eventName} event triggered`);
+        }
+
+        function unsubscribeEvent(eventName) {
+            if (subscriptions[eventName]) {
+                subscriptions[eventName].remove();
+                document.getElementById("output").innerText = `Unsubscribed from '${eventName}' event.`;
+            }
+        }
+    </script>
+</body>
+</html>
