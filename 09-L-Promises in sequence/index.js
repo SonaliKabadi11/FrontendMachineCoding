@@ -35,13 +35,15 @@ const taskRunnerIterative = async (tasks, cb) => {
     cb(results, errors)
 }
 
+
 const taskRunnerRecursion = (tasks, cb) => {
     let results = [];
     let errors = [];
-    let curInd = 0;
-    let index = curInd;
-    index++;
-    function helper(tasks, curInd){
+    let index = 0;
+   
+    function helper(){
+        let curInd = index;
+        index++;
         if(curInd >= tasks.length){
             cb(results, errors);
             return;
@@ -49,10 +51,10 @@ const taskRunnerRecursion = (tasks, cb) => {
 
         tasks[curInd]().then((res) =>{
             results.push(res);
-            helper(tasks, index);
+            helper();
         }).catch((err) =>{
             errors.push(err);
-            helper(tasks, index)
+            helper()
         })
     }
     helper(tasks, index);
